@@ -1,199 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>AutoFormatter</title>
-
-    <style>
-        :root {
-            --bg-light: #f7f7f7;
-            --bg-dark: #111;
-            --text-light: #222;
-            --text-dark: #eee;
-            --panel-light: #ffffff;
-            --panel-dark: #1a1a1a;
-            --border-light: #ccc;
-            --border-dark: #444;
-            --button-blue: #0078d4;
-            --button-blue-dark: #005a9e;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-light);
-        }
-
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
-
-        h1 {
-            margin: 24px 0 0 20px;
-            font-size: 28px;
-            font-weight: 600;
-            text-align: left;
-            color: var(--text-light);
-        }
-
-        body.dark-mode h1 {
-            color: var(--text-dark);
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: var(--panel-light);
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-
-        body.dark-mode .container {
-            background: var(--panel-dark);
-            border: 1px solid #333;
-        }
-
-        textarea {
-            width: 100%;
-            height: 140px;
-            max-height: 140px;
-            padding: 10px;
-            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            resize: none;
-            box-sizing: border-box;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        body.dark-mode textarea {
-            background: #181818;
-            border: 1px solid #444;
-            color: var(--text-dark);
-        }
-
-        .button-row {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            justify-content: flex-start;
-            margin-top: 12px;
-        }
-
-        button {
-            display: inline-block;
-            width: auto;
-            padding: 10px 16px;
-            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            background: var(--button-blue);
-            color: white;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        #clear {
-            background: #666;
-        }
-
-        body.dark-mode button {
-            background: var(--button-blue-dark);
-        }
-
-        body.dark-mode #clear {
-            background: #555;
-        }
-
-        #output {
-            margin-top: 16px;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            min-height: 80px;
-            font-size: 17px;
-            white-space: pre-wrap;
-            box-sizing: border-box;
-        }
-
-        body.dark-mode #output {
-            background: #181818;
-            border: 1px solid #444;
-            color: var(--text-dark);
-        }
-
-        .toggle {
-            margin-top: 20px;
-            text-align: left;
-            cursor: pointer;
-            font-size: 14px;
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoFormatter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #0078d4;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #005ea0;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background: white;
+      border-radius: 6px;
+      min-height: 150px;
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
-
 <body>
-    <h1>AutoFormatter</h1>
+  <h1>AutoFormatter</h1>
 
-    <div class="container">
-        <textarea id="input" placeholder="Paste messy text here..."></textarea>
+  <textarea id="input" placeholder="Paste text here..."></textarea>
+  <button onclick="formatText()">Format</button>
 
-        <div class="button-row">
-            <button id="format">Format</button>
-            <button id="clear">Clear</button>
-        </div>
+  <div id="output"></div>
 
-        <div id="output">Formatted text will appear here.</div>
+  <script>
+    function formatText() {
+      let text = document.getElementById("input").value;
 
-        <div class="toggle" id="toggle">Toggle Dark Mode</div>
-    </div>
+      // Trim extra spaces
+      text = text.trim();
 
-    <script>
-        const inputEl = document.getElementById("input");
-        const outputEl = document.getElementById("output");
+      // Replace multiple spaces with single
+      text = text.replace(/\s+/g, " ");
 
-        function structuralFormat(text) {
-            // Trim leading/trailing whitespace
-            let cleaned = text.trim();
+      // Add line breaks after periods
+      text = text.replace(/\. /g, ".\n");
 
-            // Normalize line endings
-            cleaned = cleaned.replace(/\r\n/g, "\n");
+      // Capitalize first letter of each sentence
+      text = text.replace(/(^\w|\.\s+\w)/g, match => match.toUpperCase());
 
-            // Replace multiple blank lines with a single blank line
-            cleaned = cleaned.replace(/\n{3,}/g, "\n\n");
-
-            // Replace multiple spaces with a single space (but keep line breaks)
-            cleaned = cleaned
-                .split("\n")
-                .map(line => line.replace(/\s{2,}/g, " "))
-                .join("\n");
-
-            return cleaned;
-        }
-
-        document.getElementById("format").addEventListener("click", () => {
-            const text = inputEl.value;
-            if (!text.trim()) {
-                outputEl.textContent = "No text to format.";
-                return;
-            }
-            const formatted = structuralFormat(text);
-            outputEl.textContent = formatted || "No text to format.";
-        });
-
-        document.getElementById("clear").addEventListener("click", () => {
-            inputEl.value = "";
-            outputEl.textContent = "Formatted text will appear here.";
-        });
-
-        document.getElementById("toggle").addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
-    </script>
+      document.getElementById("output").innerText = text;
+    }
+  </script>
 </body>
 </html>
