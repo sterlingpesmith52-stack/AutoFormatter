@@ -1,117 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AutoFormatter</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>AutoFormatter</title>
 
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: white;
-    margin: 0;
-    padding: 20px;
-    color: #222;
-  }
+    <style>
+        :root {
+            --bg-light: #f7f7f7;
+            --bg-dark: #111;
+            --text-light: #222;
+            --text-dark: #eee;
+            --panel-light: #ffffff;
+            --panel-dark: #1a1a1a;
+            --border-light: #ccc;
+            --border-dark: #444;
+            --button-blue: #0078d4;
+            --button-blue-dark: #005a9e;
+        }
 
-  h1 {
-    text-align: center;
-    color: #1a73e8;
-    margin-bottom: 20px;
-  }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
 
-  #inputText {
-    width: 100%;
-    height: 220px;
-    padding: 14px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    resize: none;
-    box-sizing: border-box;
-  }
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
 
-  .buttonRow {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 18px;
-  }
+        h1 {
+            margin: 24px 0 0 20px;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: left;
+            color: var(--text-light);
+        }
 
-  /* PRIMARY BUTTON — FORMAT */
-  #formatButton {
-    background: #1a73e8;
-    color: white;
-    border: none;
-    padding: 14px 20px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.18);
-    transition: all 0.15s ease;
-  }
+        body.dark-mode h1 {
+            color: var(--text-dark);
+        }
 
-  #formatButton:hover {
-    background: #1666d1;
-    transform: translateY(-1px);
-  }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--panel-light);
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
 
-  #formatButton:active {
-    background: #145bbf;
-    transform: translateY(0);
-  }
+        body.dark-mode .container {
+            background: var(--panel-dark);
+            border: 1px solid #333;
+        }
 
-  /* SECONDARY BUTTON — CLEAR (de‑emphasized) */
-  #clearButton {
-    background: #e9e9e9;
-    color: #444;
-    border: 1px solid #ccc;
-    padding: 10px 16px;
-    font-size: 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: none;
-    transition: background 0.15s ease;
-  }
+        textarea {
+            width: 100%;
+            height: 140px;
+            max-height: 140px;
+            padding: 10px;
+            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: none;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
+        }
 
-  #clearButton:hover {
-    background: #dcdcdc;
-  }
+        body.dark-mode textarea {
+            background: #181818;
+            border: 1px solid #444;
+            color: var(--text-dark);
+        }
 
-  #clearButton:active {
-    background: #d0d0d0;
-  }
-</style>
+        .button-row {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: flex-start;
+            margin-top: 12px;
+        }
 
+        button {
+            display: inline-block;
+            width: auto;
+            padding: 10px 16px;
+            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: var(--button-blue);
+            color: white;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        #clear {
+            background: #666;
+        }
+
+        body.dark-mode button {
+            background: var(--button-blue-dark);
+        }
+
+        body.dark-mode #clear {
+            background: #555;
+        }
+
+        #output {
+            margin-top: 16px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            min-height: 80px;
+            font-size: 17px;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+        }
+
+        body.dark-mode #output {
+            background: #181818;
+            border: 1px solid #444;
+            color: var(--text-dark);
+        }
+
+        .toggle {
+            margin-top: 20px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
 </head>
+
 <body>
+    <h1>AutoFormatter</h1>
 
-<h1>AutoFormatter</h1>
+    <div class="container">
+        <textarea id="input" placeholder="Paste messy text here..."></textarea>
 
-<textarea id="inputText" placeholder="Paste messy text here…"></textarea>
+        <div class="button-row">
+            <button id="format">Format</button>
+            <button id="clear">Clear</button>
+        </div>
 
-<div class="buttonRow">
-  <button id="formatButton">Format</button>
-  <button id="clearButton">Clear</button>
-</div>
+        <div id="output">Formatted text will appear here.</div>
 
-<script>
-  document.getElementById("formatButton").addEventListener("click", () => {
-    let text = document.getElementById("inputText").value;
+        <div class="toggle" id="toggle">Toggle Dark Mode</div>
+    </div>
 
-    // Basic cleanup rules
-    text = text.replace(/\s+/g, " ").trim();        // collapse whitespace
-    text = text.replace(/\n{3,}/g, "\n\n");         // limit blank lines
-    text = text.replace(/\.{3,}/g, "...");          // normalize ellipses
+    <script>
+        const inputEl = document.getElementById("input");
+        const outputEl = document.getElementById("output");
 
-    document.getElementById("inputText").value = text;
-  });
+        function structuralFormat(text) {
+            // Trim leading/trailing whitespace
+            let cleaned = text.trim();
 
-  document.getElementById("clearButton").addEventListener("click", () => {
-    document.getElementById("inputText").value = "";
-  });
-</script>
+            // Normalize line endings
+            cleaned = cleaned.replace(/\r\n/g, "\n");
 
+            // Replace multiple blank lines with a single blank line
+            cleaned = cleaned.replace(/\n{3,}/g, "\n\n");
+
+            // Replace multiple spaces with a single space (but keep line breaks)
+            cleaned = cleaned
+                .split("\n")
+                .map(line => line.replace(/\s{2,}/g, " "))
+                .join("\n");
+
+            return cleaned;
+        }
+
+        document.getElementById("format").addEventListener("click", () => {
+            const text = inputEl.value;
+            if (!text.trim()) {
+                outputEl.textContent = "No text to format.";
+                return;
+            }
+            const formatted = structuralFormat(text);
+            outputEl.textContent = formatted || "No text to format.";
+        });
+
+        document.getElementById("clear").addEventListener("click", () => {
+            inputEl.value = "";
+            outputEl.textContent = "Formatted text will appear here.";
+        });
+
+        document.getElementById("toggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
 </body>
 </html>
-
