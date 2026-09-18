@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoFormatter</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,7 +22,8 @@
     h1 {
       margin: 0 0 15px 0;
       text-align: left;
-      font-size: 22px;
+      font-size: 20px;      /* ✔ matches brand */
+      font-weight: bold;    /* ✔ matches brand */
     }
 
     textarea {
@@ -62,8 +64,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="panel">
     <h1>AutoFormatter</h1>
 
@@ -86,6 +88,5 @@
       document.getElementById("output").innerText = text;
     }
   </script>
-
 </body>
 </html>
