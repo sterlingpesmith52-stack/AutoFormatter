@@ -9,13 +9,13 @@
     /* Entire page background must be white */
     body {
       font-family: Arial, sans-serif;
-      background: white;        /* ✔ fixed */
+      background: white;
       margin: 20px;
     }
 
     /* Panel matches Clarifier exactly */
     .panel {
-      background: white;        /* ✔ fixed */
+      background: white;
       padding: 20px;
       border-radius: 10px;
       max-width: 480px;
@@ -26,13 +26,13 @@
       margin: 0 0 15px 0;
       text-align: left;
       font-size: 22px;
-      font-weight: bold;        /* ✔ fixed */
-      background: none;         /* ✔ fixed */
+      font-weight: bold;
+      background: none;
     }
 
     /* Input area matches Clarifier exactly */
     textarea {
-      width: 100%;              /* ✔ fixed width */
+      width: 100%;              /* ✔ fits panel */
       height: 140px;
       padding: 10px;
       font-size: 16px;
@@ -41,12 +41,12 @@
       resize: none;
       margin-bottom: 12px;
       outline: none;            /* ✔ removes blue highlight */
+      box-sizing: border-box;   /* ✔ ensures width matches output */
     }
 
-    /* Remove blue border on focus */
     textarea:focus {
       border: 1px solid #ccc;   /* ✔ stays gray */
-      outline: none;            /* ✔ no blue glow */
+      outline: none;
     }
 
     /* Button matches Clarifier brand */
@@ -63,8 +63,10 @@
       margin-bottom: 15px;
     }
 
-    /* Output area matches Clarifier */
+    /* Output area now matches input width exactly */
     #output {
+      width: 100%;              /* ✔ same width as input */
+      box-sizing: border-box;   /* ✔ prevents overflow */
       background: white;
       border-radius: 6px;
       padding: 10px;
