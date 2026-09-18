@@ -6,28 +6,33 @@
   <title>AutoFormatter</title>
 
   <style>
+    /* Entire page background must be white */
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: white;        /* ✔ fixed */
       margin: 20px;
     }
 
+    /* Panel matches Clarifier exactly */
     .panel {
-      background: white;        /* ✔ correct brand */
+      background: white;        /* ✔ fixed */
       padding: 20px;
       border-radius: 10px;
       max-width: 480px;
     }
 
+    /* Title matches Clarifier: bold + left-aligned + correct size */
     h1 {
       margin: 0 0 15px 0;
       text-align: left;
-      font-size: 22px;          /* ✔ correct size */
-      font-weight: normal;      /* ✔ matches Clarifier */
+      font-size: 22px;
+      font-weight: bold;        /* ✔ fixed */
+      background: none;         /* ✔ fixed */
     }
 
+    /* Input area matches Clarifier exactly */
     textarea {
-      width: 100%;              /* ✔ fits panel */
+      width: 100%;              /* ✔ fixed width */
       height: 140px;
       padding: 10px;
       font-size: 16px;
@@ -35,8 +40,16 @@
       border: 1px solid #ccc;   /* ✔ gray border */
       resize: none;
       margin-bottom: 12px;
+      outline: none;            /* ✔ removes blue highlight */
     }
 
+    /* Remove blue border on focus */
+    textarea:focus {
+      border: 1px solid #ccc;   /* ✔ stays gray */
+      outline: none;            /* ✔ no blue glow */
+    }
+
+    /* Button matches Clarifier brand */
     button {
       display: inline-block;
       padding: 8px 14px;
@@ -50,6 +63,7 @@
       margin-bottom: 15px;
     }
 
+    /* Output area matches Clarifier */
     #output {
       background: white;
       border-radius: 6px;
@@ -86,4 +100,3 @@
   </script>
 </body>
 </html>
-
