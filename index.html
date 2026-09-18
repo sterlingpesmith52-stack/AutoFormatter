@@ -13,7 +13,7 @@
     }
 
     .panel {
-      background: #e8e8e8;
+      background: white;        /* ✔ correct brand */
       padding: 20px;
       border-radius: 10px;
       max-width: 480px;
@@ -22,18 +22,17 @@
     h1 {
       margin: 0 0 15px 0;
       text-align: left;
-      font-size: 22px;      /* ✔ matches Clarifier */
-      font-weight: normal;  /* ✔ matches Clarifier */
-      background: none;     /* ✔ removes gray background */
+      font-size: 22px;          /* ✔ correct size */
+      font-weight: normal;      /* ✔ matches Clarifier */
     }
 
     textarea {
-      width: 100%;
-      height: 140px;        /* ✔ fits the panel like Clarifier */
+      width: 100%;              /* ✔ fits panel */
+      height: 140px;
       padding: 10px;
       font-size: 16px;
       border-radius: 6px;
-      border: 1px solid #ccc;  /* ✔ removes blue border */
+      border: 1px solid #ccc;   /* ✔ gray border */
       resize: none;
       margin-bottom: 12px;
     }
@@ -87,3 +86,4 @@
   </script>
 </body>
 </html>
+
