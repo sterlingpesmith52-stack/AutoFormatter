@@ -13,25 +13,28 @@
         padding: 0;
     }
 
+    /* HEADER FIXES */
     .mf-header {
         display: flex;
-        align-items: center;
+        flex-direction: column;   /* stack logo above title */
+        align-items: flex-start;  /* left-align both */
         padding: 12px 16px;
     }
 
     .mf-logo {
-        height: 48px;
+        height: 32px;   /* smaller logo */
         width: auto;
-        margin-right: 10px;
+        margin-bottom: 4px;  /* small gap before title */
     }
 
     .mf-title {
-        font-size: 24px;
+        font-size: 24px;   /* larger title */
         font-weight: 600;
         margin: 0;
         padding: 0;
     }
 
+    /* MAIN CONTENT */
     .container {
         padding: 16px;
         text-align: left;
