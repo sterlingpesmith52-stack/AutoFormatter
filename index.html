@@ -1,104 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoFormatter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoFormatter</title>
 
-  <style>
-    /* Entire page background must be white */
+<!-- Universal Stylesheet -->
+<link rel="stylesheet" href="universal.css">
+
+<style>
     body {
-      font-family: Arial, sans-serif;
-      background: white;
-      margin: 20px;
+        background: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
-    /* Panel matches Clarifier exactly */
-    .panel {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 480px;
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 14px;
+        border-bottom: 2px solid #000;
     }
 
-    /* Title matches Clarifier: bold + left-aligned + correct size */
-    h1 {
-      margin: 0 0 15px 0;
-      text-align: left;
-      font-size: 22px;
-      font-weight: bold;
-      background: none;
+    .logo {
+        height: 48px;
+        width: auto;
+        margin-right: 12px;
     }
 
-    /* Input area matches Clarifier exactly */
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .container {
+        padding: 16px;
+    }
+
     textarea {
-      width: 100%;              /* ✔ fits panel */
-      height: 140px;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;   /* ✔ gray border */
-      resize: none;
-      margin-bottom: 12px;
-      outline: none;            /* ✔ removes blue highlight */
-      box-sizing: border-box;   /* ✔ ensures width matches output */
+        width: 100%;
+        height: 160px;
+        font-size: 16px;
+        padding: 10px;
+        border: 2px solid #000;
+        border-radius: 6px;
+        box-sizing: border-box;
     }
 
-    textarea:focus {
-      border: 1px solid #ccc;   /* ✔ stays gray */
-      outline: none;
+    .button {
+        margin-top: 14px;
+        padding: 12px 18px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 18px;
+        width: 100%;
+        cursor: pointer;
     }
 
-    /* Button matches Clarifier brand */
-    button {
-      display: inline-block;
-      padding: 8px 14px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background: #0078d4;
-      color: white;
-      cursor: pointer;
-      text-align: left;
-      margin-bottom: 15px;
+    .output {
+        margin-top: 18px;
+        padding: 12px;
+        border: 2px solid #000;
+        border-radius: 6px;
+        min-height: 120px;
+        background: #fafafa;
+        font-size: 16px;
+        white-space: pre-wrap;
     }
+</style>
 
-    /* Output area now matches input width exactly */
-    #output {
-      width: 100%;              /* ✔ same width as input */
-      box-sizing: border-box;   /* ✔ prevents overflow */
-      background: white;
-      border-radius: 6px;
-      padding: 10px;
-      min-height: 120px;
-      border: 1px solid #ccc;
-      white-space: pre-wrap;
-    }
-  </style>
 </head>
-
 <body>
-  <div class="panel">
-    <h1>AutoFormatter</h1>
 
-    <textarea id="input" placeholder="Paste text here..."></textarea>
+<div class="header">
+    <img src="IMG_1741.jpeg" class="logo">
+    <div class="title">AutoFormatter</div>
+</div>
 
-    <button onclick="formatText()">Format</button>
+<div class="container">
+    <textarea id="inputBox" placeholder="Paste text here…"></textarea>
+    <button class="button" onclick="formatText()">Format</button>
+    <div id="outputBox" class="output"></div>
+</div>
 
-    <div id="output"></div>
-  </div>
+<script>
+function formatText() {
+    let text = document.getElementById("inputBox").value;
 
-  <script>
-    function formatText() {
-      let text = document.getElementById("input").value;
+    // Remove stray "in" bug and normalize spacing
+    text = text.replace(/\bin\b\s*$/gm, "");
+    text = text.replace(/\s+/g, " ").trim();
 
-      text = text.trim();
-      text = text.replace(/\s+/g, " ");
-      text = text.replace(/\. /g, ".\n");
-      text = text.replace(/(^\w|\.\s+\w)/g, match => match.toUpperCase());
+    // Basic formatting rules
+    text = text.replace(/\. /g, ".\n");
+    text = text.replace(/; /g, ";\n");
+    text = text.replace(/: /g, ":\n");
 
-      document.getElementById("output").innerText = text;
-    }
-  </script>
+    document.getElementById("outputBox").innerText = text;
+}
+</script>
+
 </body>
 </html>
