@@ -18,13 +18,13 @@ body{
     display:flex;
     flex-direction:column;
     align-items:flex-start;
-    padding:12px 16px 8px 16px;
+    padding:20px 16px 16px 16px;
 }
 
 .mf-logo{
     height:32px;
     width:auto;
-    margin-bottom:4px;
+    margin-bottom:10px;
 }
 
 .mf-title{
@@ -36,8 +36,8 @@ body{
 
 .subtitle{
     font-size:15px;
-    margin-top:4px;
-    margin-bottom:4px;
+    margin-top:6px;
+    margin-bottom:12px;
     opacity:.8;
 }
 
@@ -57,9 +57,13 @@ textarea{
     font-family:inherit;
 }
 
-button{
-    display:inline-block;
+.button-row{
+    display:flex;
+    gap:8px;
     margin-top:12px;
+}
+
+button{
     padding:8px 12px;
     font-size:14px;
     font-weight:600;
@@ -101,6 +105,7 @@ button{
     padding:12px;
     border-radius:8px;
     font-weight:600;
+    box-sizing:border-box;
 }
 </style>
 </head>
@@ -108,7 +113,7 @@ button{
 <body>
 
 <div class="mf-header">
-    IMG_1741.jpeg
+    <img src="IMG_1741.jpeg" alt="MicroFoundary Logo" class="mf-logo">
 
     <h1 class="mf-title">AutoFormatter</h1>
 
@@ -124,9 +129,17 @@ button{
         placeholder="Paste text here..."
     ></textarea>
 
-    <button onclick="formatText()">
-        Format
-    </button>
+    <div class="button-row">
+
+        <button onclick="formatText()">
+            Format
+        </button>
+
+        <button onclick="copyOutput()">
+            Copy
+        </button>
+
+    </div>
 
     <div id="output">
 Formatted text appears here...
@@ -135,7 +148,7 @@ Formatted text appears here...
 </div>
 
 <div class="footer" id="buyFooter">
-    #
+    <a href="#" class="buy-button">
         Buy This Tool
     </a>
 </div>
@@ -144,9 +157,25 @@ Formatted text appears here...
 
 const userOwnsTool = false;
 
+const footer =
+    document.getElementById("buyFooter");
+
 if(userOwnsTool){
-    document.getElementById("buyFooter").style.display = "none";
+    footer.style.display = "none";
 }
+
+const input =
+    document.getElementById("input");
+
+input.addEventListener("focus", () => {
+    footer.style.display = "none";
+});
+
+input.addEventListener("blur", () => {
+    if(!userOwnsTool){
+        footer.style.display = "block";
+    }
+});
 
 function formatText(){
 
@@ -154,14 +183,23 @@ function formatText(){
         document.getElementById("input").value;
 
     const formatted =
-        raw.replace(/\s+/g," ").trim();
+        raw.replace(/\s+/g," ")
+           .trim();
 
     document.getElementById("output").textContent =
         formatted;
+}
+
+function copyOutput(){
+
+    const text =
+        document.getElementById("output").textContent;
+
+    navigator.clipboard.writeText(text);
+
 }
 
 </script>
 
 </body>
 </html>
-
